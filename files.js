@@ -15,7 +15,7 @@ Thanks for trying our challenge!
     '/README.txt',
     {
       type: 'text/plain',
-      lastModified: new Date('2020-01-05T16:39:00')
+      lastModified: new Date('2021-04-26T17:11:00')
     }
   );
 

@@ -5,11 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
+    "autosize": "^4.0.2",
     "classnames": "^2.2.6",
     "lodash": "^4.17.19",
     "next": "^9.5.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-markdown": "^4.3.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -36,8 +38,5 @@
     "rules": {
       "no-console": 0
     }
-  },
-  "prettier": {
-    "singleQuote": true
   }
 }

@@ -99,23 +99,58 @@ Previewer.propTypes = {
 
 // Uncomment keys to register editors for media types
 const REGISTERED_EDITORS = {
-  // "text/plain": PlaintextEditor,
-  // "text/markdown": MarkdownEditor,
+  "text/plain": PlaintextEditor,
+  "text/markdown": MarkdownEditor,
 };
 
 function PlaintextFilesChallenge() {
   const [files, setFiles] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
+  const [editedFiles, setEditedFiles] = useState([]);
 
   useEffect(() => {
     const files = listFiles();
-    setFiles(files);
-  }, []);
+    //Condition
+    if (editedFiles.length <= 0) {
+      console.log("Default!");
+      setFiles(files);
+    } else {
+      console.log("Adding edits to files!");
+      let updatedFiles = [];
+      for(var i=0; i<files.length; i=i+1) {
+        let fileToAdd = files[i];
+        for(var j=0; j<editedFiles.length; j=j+1) {
+          let editedFile = editedFiles[j];
+          if (files[i].name === editedFile.name) {
+            fileToAdd = editedFile;
+            break;
+          }
+        }
+        updatedFiles.push(fileToAdd);
+      }
+      console.log("updatedFiles: ", updatedFiles);
+      setFiles(updatedFiles);
+    }
+  }, [activeFile]);
 
-  const write = file => {
+  const write = (file, value) => {
     console.log('Writing soon... ', file.name);
 
     // TODO: Write the file to the `files` array
+    let oldFile;
+    for(var i = 0; i <files.length; i=i+1){
+      if(files[i].name === file.name) {
+        oldFile = files[i];
+        break;
+      }
+    }
+    const newEditedFiles = editedFiles.filter((f) => f.name !== file.name);
+    const newFile = new File([value], file.name, {
+      type: oldFile.type,
+      lastModified: new Date(),
+    });
+    newEditedFiles.push(newFile);
+    setEditedFiles(newEditedFiles);
   };
 
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
